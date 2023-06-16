@@ -1,7 +1,7 @@
 Magic: The Gathering resources
 ==============================
 
-Sites
+Tools
 -----
 
 - [Deck Numbers](https://docs.google.com/spreadsheets/d/13lglvTH3dDVUz4k9G1NLzoiRJzrCaWacC0iLHiuqewU)
@@ -11,7 +11,11 @@ Sites
   — Printed to the same size as MtG card.
 - [Life Counter](https://life-counter.vercel.app)
   ([open sourced](https://github.com/marek-saji/life-counter))
+- [Wizard’s official companion app](https://magic.wizards.com/en/products/companion-app)
+- [SpellTable](https://spelltable.wizards.com/) for playing paper magic online
 
+Sites
+-----
 
 ### Official Materials
 
