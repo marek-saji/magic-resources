@@ -94,3 +94,5 @@ Terms
     can be summoned at any time. When it dies, it goes back there.
     Summoning it back costs +2 colourless mana more for each time it
     died.
+
+  <https://magic.wizards.com/en/formats/commander>
