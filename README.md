@@ -81,6 +81,8 @@ Terms
 - _sealed_ — Even when people meet together and crack open six draft
   boosters and create decks (40+ cards) out of cards they got then play.
   Players can add any basic lands they need to create the decks.
+
+  [Read more](/sealed)
   <https://magic.wizards.com/en/formats/sealed-deck>
 
 - _draft_ — Similar to _sealed_, but instead of everybody having their
