@@ -7,7 +7,7 @@ Tools
 - [Deck Numbers](https://docs.google.com/spreadsheets/d/13lglvTH3dDVUz4k9G1NLzoiRJzrCaWacC0iLHiuqewU)
   — Generally good card type distribution (How many lands? How many
   creatures? How many ones that cost X mana?)
-- [Turn structure cheat sheet](https://docs.google.com/document/d/13Dd-UmvHTtvsioFp8RIUUUd_ltu61s2kdcskvxJvURI)
+- [Turn structure cheat sheet](./turn-structure.html)
   — Printed to the same size as MtG card.
 - [Life Counter](https://life-counter.vercel.app)
   ([open sourced](https://github.com/marek-saji/life-counter))
