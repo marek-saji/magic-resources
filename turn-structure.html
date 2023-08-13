@@ -3,25 +3,12 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Magic: The Gatheting Turn Structure</title>
+    <title>Magic: The Gathering Turn Structure</title>
+    <link href="./styles/index.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
     <style>
-      :root,
-      ::backdrop
-      {
-        box-sizing: border-box;
-        font-family: 'Sorts Mill Goudy', serif;
-      }
-
-      *,
-      *::after,
-      *::before
-      {
-        box-sizing: inherit;
-      }
-
       /* TODO Make sure this work properly when printing */
       .card
       {
@@ -66,7 +53,6 @@
       {
         --heading-scale: 1.3;
 
-        font-family: 'Sorts Mill Goudy', serif;
         font-size: calc(1em * var(--heading-scale));
         margin: 0;
       }
@@ -104,6 +90,7 @@
 
       @media print
       {
+        nav,
         h1,
         .size-note
         {
@@ -119,7 +106,13 @@
   </head>
 
   <body>
-    <h1>Turn Structure</h1>
+    <nav>
+      <a href=".">go back to main page</a>
+    </nav>
+
+    <h1>
+      Turn Structure
+    </h1>
 
     <main class="card">
       <div class="card__contents">

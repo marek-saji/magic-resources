@@ -1,0 +1,80 @@
+:root,
+::backdrop
+{
+  --font-heading: 'Sorts Mill Goudy', serif;
+  --font-text: sans-serif;
+
+  --color-decoration: #888;
+
+  box-sizing: border-box;
+  color-scheme: dark light;
+  font-family: var(--font-text);
+  font-size: 1.1em;
+  line-height: 1.5em;
+}
+
+:where(
+  *,
+  *::after,
+  *::before
+)
+{
+  box-sizing: inherit;
+}
+
+:where(h1)
+{
+  font-size: clamp(2em, 3vw, 4em);
+  text-align: center;
+  margin-block: 2lh;
+}
+
+
+:where(:target)
+{
+  background-color: highlight;
+}
+
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5
+)
+{
+  font-family: var(--font-heading);
+  margin-block: 1lh;
+  background-color: Canvas;
+}
+
+:where(li + li)
+{
+  margin-block-start: 0.5lh;
+}
+
+:where(dt)
+{
+  font-weight: bold;
+  font-family: var(--font-heading);
+}
+
+:where(.term + .term)
+{
+  margin-block-start: 1lh;
+}
+
+:where(hr)
+{
+  border: none;
+  font-size: 2em;
+  height: 1em;
+  color: var(--color-decoration);
+  line-height: 1em;
+}
+:where(hr)::before
+{
+  display: block;
+  content: '🙑';
+  text-align: center;
+}
