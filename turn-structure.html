@@ -9,20 +9,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
     <style>
-      /* TODO Make sure this work properly when printing */
+      .size-note
+      {
+        text-align: center;
+      }
+
+      .cards {
+        text-align: center;
+      }
+
       .card
       {
         --hanging-size: 2.5ch;
+        --border-width: 1px;
 
         container-name: card;
         container-type: inline-size;
-        outline: CanvasText dotted thin;
-        display: flex;
+        border: CanvasText dotted var(--border-width);
+        display: inline-flex;
         flex-direction: column;
         justify-content: center;
         width: 30em;
         max-width: 100%;
         padding: 1em;
+        text-align: start;
         font-family: sans-serif;
 
         /* cards are 6.3×8.8cm with 3mm border radius */
@@ -88,6 +98,20 @@
         font-style: italic;
       }
 
+      @page
+      {
+        /* Small margin to fit 9 cards on a A4 page */
+        margin: 0.25em;
+      }
+
+      @media screen
+      {
+        .card--clone
+        {
+          display: none;
+        }
+      }
+
       @media print
       {
         nav,
@@ -114,75 +138,98 @@
       Turn Structure
     </h1>
 
-    <main class="card">
-      <div class="card__contents">
-        <section>
-          <h2>Begin</h2>
-          <ol>
-            <li>Untap your cards.</li>
-            <!-- TODO Hanging punctuation? -->
-            <li><q>Unkeep step</q> happens.</li>
-            <li>Draw a card.</li>
-          </ol>
-        </section>
+    <main class="cards">
+      <div class="card" id=card>
+        <div class="card__contents">
+          <section>
+            <h2>Begin</h2>
+            <ol>
+              <li>Untap your cards.</li>
+              <!-- TODO Hanging punctuation? -->
+              <li><q>Unkeep step</q> happens.</li>
+              <li>Draw a card.</li>
+            </ol>
+          </section>
 
-        <section>
-          <h2 style="--symbol: '◼ '">Main phase</h2>
-          <ul>
-            <li>One land per whole turn.</li>
-            <li>
-              Cast spells (all cards other than lands):
-              <br>
-              creatures, instants, sorceries, enchantments, artifacts, …
-            </li>
-          </ul>
-        </section>
+          <section>
+            <h2 style="--symbol: '◼ '">Main phase</h2>
+            <ul>
+              <li>One land per whole turn.</li>
+              <li>
+                Cast spells (all cards other than lands):
+                <br>
+                creatures, instants, sorceries, enchantments, artifacts, …
+              </li>
+            </ul>
+          </section>
 
-        <section>
-          <!-- TODO Unicode text selectionv ariant -->
-          <h2 style="--symbol: '⚔\FE0E '">Combat</h2>
-          <ol>
-            <li>
-              Declare creatures you want to attack with.
-              <br>
-              <em>Summoned this turn or tapped can't attack.</em>
-            </li>
-            <li>
-              Opponent declares if and how they block.
-              <br>
-              <em>Tapped can’t block. One attacker can have multiple blockers.</em>
-            </li>
-            <li>Combat damage is dealt.</li>
-            <li>Unblocked creatures deal damage to the player.</li>
-            <li>Dead creatures go to the graveyard.</li>
-          </ol>
-        </section>
+          <section>
+            <!-- TODO Unicode text selectionv ariant -->
+            <h2 style="--symbol: '⚔\FE0E '">Combat</h2>
+            <ol>
+              <li>
+                Declare creatures you want to attack with.
+                <br>
+                <em>Summoned this turn or tapped can't attack.</em>
+              </li>
+              <li>
+                Opponent declares if and how they block.
+                <br>
+                <em>Tapped can’t block. One attacker can have multiple blockers.</em>
+              </li>
+              <li>Combat damage is dealt.</li>
+              <li>Unblocked creatures deal damage to the player.</li>
+              <li>Dead creatures go to the graveyard.</li>
+            </ol>
+          </section>
 
-        <section>
-          <h2 style="--symbol: '◼ '">Main phase (again)</h2>
-          <ul>
-            <li>Play land only if you haven't already this turn.</li>
-          </ul>
-        </section>
+          <section>
+            <h2 style="--symbol: '◼ '">Main phase (again)</h2>
+            <ul>
+              <li>Play land only if you haven't already this turn.</li>
+            </ul>
+          </section>
 
-        <section>
-          <h2>End</h2>
-          <ol>
-            <li>Discard, if you have more than max (7) cards.</li>
-            <li>Creatures heal.</li>
-            <li>Pass the turn to next player.</li>
-          </ol>
-        </section>
+          <section>
+            <h2>End</h2>
+            <ol>
+              <li>Discard, if you have more than max (7) cards.</li>
+              <li>Creatures heal.</li>
+              <li>Pass the turn to next player.</li>
+            </ol>
+          </section>
 
 
-        <footer>
-          Instants (interrupts) and abilities can be used at any time.
-        </footer>
+          <footer>
+            Instants (interrupts) and abilities can be used at any time.
+          </footer>
+        </div>
       </div>
     </main>
 
-    <small class="size-note">
-      (This should be the size of the Magic&reg; card after printing.)
-    </small>
+    <p class="size-note">
+      <small>
+        (This should be the size of the Magic&reg; card after printing.)
+      </small>
+    </p>
+
+    <script type="module">
+      /* Create clones of the card visible only when printing */
+      const PRINT_CARD_COUNT = 9;
+      const card = document.getElementById('card');
+      for (let i = 2; i <= PRINT_CARD_COUNT; i+= 1)
+      {
+        const clone = card.cloneNode(true);
+        clone.classList.add('card--clone');
+        card.parentElement.insertBefore(
+          clone,
+          card
+        );
+        card.parentElement.insertBefore(
+          document.createTextNode(' '),
+          card
+        );
+      }
+    </script>
   </body>
 </html>
