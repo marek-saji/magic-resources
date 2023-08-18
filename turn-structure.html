@@ -3,6 +3,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="view-transition" content="same-origin" />
     <title>Magic: The Gathering Turn Structure</title>
     <link href="./styles/index.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,11 +132,20 @@
 
   <body>
     <nav>
-      <a href=".">go back to main page</a>
+      <a
+        href="."
+        class="view-title"
+        style="view-transition-name: title--home;"
+      >go back to main page</a>
     </nav>
 
     <h1>
-      Turn Structure
+      <span
+        class="view-title"
+        style="view-transition-name: title--turn-structure;"
+      >
+        Turn Structure
+      </span>
     </h1>
 
     <main class="cards">

@@ -22,6 +22,11 @@
   box-sizing: inherit;
 }
 
+.view-title
+{
+  display: inline-block;
+}
+
 :where(h1)
 {
   font-size: clamp(2em, 3vw, 4em);

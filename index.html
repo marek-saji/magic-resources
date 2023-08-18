@@ -3,6 +3,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="view-transition" content="same-origin" />
     <title>Magic: The Gathering resources</title>
     <link href="./styles/index.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +13,12 @@
 
   <body>
     <h1>
-      Magic: The Gathering resources
+      <span
+        class="view-title"
+        style="view-transition-name: title--home;"
+      >
+        Magic: The Gathering resources
+      </span>
     </h1>
 
     <h2>
@@ -22,13 +28,21 @@
 
     <ul>
       <li>
-        <a href="./deck-numbers.html">Deck Numbers</a>
+        <a
+          href="./deck-numbers.html"
+          class="view-title"
+          style="view-transition-name: title--deck-numbers;"
+        >Deck Numbers</a>
         <br />
         Generally good card type distribution
         (How many lands? How many creatures? How many ones that cost X mana?).
       </li>
       <li>
-        <a href=./turn-structure.html>Turn structure cheat sheet</a>
+        <a
+          href=./turn-structure.html
+          class="view-title"
+          style="view-transition-name: title--turn-structure;"
+        >Turn structure cheat sheet</a>
         <br />
         Printed to the same size as MtG card.
       </li>
@@ -192,7 +206,12 @@
 
       <div class="term" id=term-sealed>
         <dt>
-          sealed
+          <span
+            class="view-title"
+            style="view-transition-name: title--sealed;"
+          >
+            sealed
+          </span>
         </dt>
         <dd>
           <p>
