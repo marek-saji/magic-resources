@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Magic: The Gathering Turn Structure</title>
+    <link href="./styles/index.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy&display=swap" rel="stylesheet">
+    <style>
+      .label
+      {
+        display: inline-block;
+      }
+
+      input[type=number]
+      {
+        width: 5em;
+        font-size: inherit;
+        text-align: inherit;
+      }
+
+      /* FIXME I have a feeling this sub–rows should be done in a completely different way */
+      .visually-hidden
+      {
+        display: inline-block;
+        overflow: hidden;
+        width: 0;
+        height: 0;
+      }
+
+      table
+      {
+        font-size: 1.25em;
+        width: 100%;
+        max-width: 20em;
+        margin-inline: auto;
+        border-spacing: 0;
+        border: none;
+      }
+
+      td,
+      th
+      {
+        border: none;
+        padding-inline: 0.5ex;
+      }
+
+      th
+      {
+        min-width: 1em;
+        font-weight: normal;
+      }
+
+      tbody th
+      {
+        text-align: start;
+      }
+
+      td
+      {
+        text-align: end;
+        border: none;
+        border-inline-start: solid thin;
+        font-size: 1.2em;
+      }
+
+      .row
+      {
+        --bg-l: 33%;
+        --bg-c: 0.10;
+        --bg-h: 228;
+
+        background-color: oklch(var(--bg-l) var(--bg-c) var(--bg-h));
+      }
+
+      @media (prefers-color-scheme: light)
+      {
+        .row
+        {
+          --bg-l: 67%;
+        }
+      }
+
+      .row--lvl2
+      {
+        --bg-c: 0.06;
+      }
+
+      .row--lvl3
+      {
+        --bg-c: 0.03;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href=".">go back to main page</a>
+    </nav>
+
+    <h1>
+      Deck numbers
+    </h1>
+
+    <form id=form>
+      <table>
+        <thead>
+          <tr>
+            <th rowSpan=2 colSpan=3 scope=col>
+              Card type
+            </th>
+            <th scope=col>
+              <label>
+                <span class="label">
+                  Cards in deck:
+                </span>
+                <input
+                  name=size
+                  type=number
+                  required
+                  min=20
+                  max=200
+                  value=60
+                  list=size-datalist
+                />
+                <datalist id=size-datalist>
+                    <option value=40 />
+                    <option value=60 />
+                    <option value=100 />
+                    <option value=20 />
+                    <option value=30 />
+                </datalist>
+              </label>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row row--lvl1">
+            <th scope=row colSpan=3>Lands</th>
+            <td><output name=lands>16</output></td>
+          </tr>
+          <tr class="row row--lvl1">
+            <th scope=row colSpan=3>Non–lands</th>
+            <td><output name=nonLands>24</output></td>
+          </tr>
+          <tr class="row row--lvl2">
+            <th scope=row>
+              <span class="visually-hidden">
+                Non–lands
+              </span>
+            </th>
+            <th scope=row colSpan=2>Creatures</th>
+            <td><output name=creatures>16</output></td>
+          </tr>
+          <tr class="row row--lvl3">
+            <th scope=row>
+              <span class="visually-hidden">
+                Non–lands
+              </span>
+            </th>
+            <th scope=row>
+              <span class="visually-hidden">
+                Creatures
+              </span>
+            </th>
+            <th scope=row>1~2 drop</th>
+            <td><output name=creatures1>6</output></td>
+          </tr>
+          <tr class="row row--lvl3">
+            <th scope=row>
+              <span class="visually-hidden">
+                Non–lands
+              </span>
+            </th>
+            <th scope=row>
+              <span class="visually-hidden">
+                Creatures
+              </span>
+            </th>
+            <th scope=row>3~4 drop</th>
+            <td><output name=creatures3>8</output></td>
+          </tr>
+          <tr class="row row--lvl3">
+            <th scope=row>
+              <span class="visually-hidden">
+                Non–lands
+              </span>
+            </th>
+            <th scope=row>
+              <span class="visually-hidden">
+                Creatures
+              </span>
+            </th>
+            <th scope=row>5~6 drop</th>
+            <td><output name=creatures5>2</output></td>
+          </tr>
+          <tr class="row row--lvl2">
+            <th scope=row>
+              <span class="visually-hidden">
+                Non–lands
+              </span>
+            </th>
+            <th scope=row colSpan=2>Non–creatures</th>
+            <td><output name=nonCreatures>12</output></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <script type=module>
+      const { elements } = document.getElementById('form');
+
+      elements.size.addEventListener('input', () => {
+        let values = {}
+
+        if (!elements.size.validity.valid)
+        {
+          values = {
+            lands: '',
+            nonLands: '',
+            creatures: '',
+            creatures1: '',
+            creatures3: '',
+            creatures5: '',
+            nonCreatures: '',
+          }
+        }
+        else
+        {
+          const size = event.currentTarget.valueAsNumber;
+
+          values.lands = Math.round(size * 0.40);
+          values.nonLands = size - values.lands;
+          values.nonCreatures = Math.round(size * 0.20);
+          values.creatures = size - values.lands - values.nonCreatures;
+          values.creatures1 = Math.round(size * 0.15);
+          values.creatures5 = Math.round(size * 0.04);
+          values.creatures3 = values.creatures - values.creatures1 - values.creatures5;
+        }
+
+        for (const name in values)
+        {
+          elements[name].value = values[name];
+        }
+      });
+    </script>
+  </body>
+</html>
+
