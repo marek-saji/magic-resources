@@ -4,13 +4,23 @@
   --font-heading: 'Sorts Mill Goudy', serif;
   --font-text: sans-serif;
 
-  --color-decoration: #888;
+  --color-decoration: oklch(0.5 0 0);
+  --color-highlight-lightness: 0.1;
+  --color-highlight: oklch(var(--color-highlight-lightness) 0.1 255);
 
   box-sizing: border-box;
   color-scheme: dark light;
   font-family: var(--font-text);
   font-size: 1.1em;
   line-height: 1.5em;
+}
+
+@media not (prefers-color-scheme: dark)
+{
+  :root
+  {
+    --color-highlight-lightness: 0.9;
+  }
 }
 
 :where(
@@ -37,7 +47,7 @@
 
 :where(:target)
 {
-  background-color: highlight;
+  background-color: var(--color-highlight);
 }
 
 :where(
@@ -51,6 +61,17 @@
   font-family: var(--font-heading);
   margin-block: 1lh;
   background-color: Canvas;
+}
+
+:where(:target) :where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5
+)
+{
+  background-color: var(--color-highlight);
 }
 
 :where(li + li)
