@@ -21,6 +21,46 @@
       </span>
     </h1>
 
+    <details id=toc open>
+      <summary>
+        Table of Contents
+      </summary>
+
+      <ul>
+        <li><a href=#tools>Tools</a></li>
+        <li>
+          <a href=#sites>Sites</a>
+          <ul>
+            <li><a href=#sites-official>Official Materials</a></li>
+            <li><a href=#sites-db>Card databases</a></li>
+            <li><a href=#shops>Shops</a></li>
+          </ul>
+        </li>
+        <li><a href=#youtube>YouToube</a></li>
+        <li><a href=#commander>Commander</a></li>
+        <li>
+          <a href=#accessories>Accessories</a>
+          <ul>
+            <li><a href=#sleeves>Sleeves</a></li>
+            <li><a href=#deck-boxes>Deck boxes</a></li>
+            <li><a href=#storage>Storage</a></li>
+          </ul>
+        </li>
+        <li><a href=#terms>Terms</a></li>
+      </ul>
+    </details>
+    <script type=module>
+      const KEY = 'toc-collapsed';
+      const collapsed = localStorage.getItem(KEY) === 'true';
+      const toc = document.getElementById('toc');
+      if (collapsed) {
+        toc.open = false;
+      }
+      toc.addEventListener('toggle', () => {
+        localStorage.setItem(KEY, !toc.open);
+      });
+    </script>
+
     <section id=tools aria-labelledby=tools-heading>
 
       <h2 id=tools-heading>
