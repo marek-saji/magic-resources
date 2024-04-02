@@ -221,11 +221,13 @@
 
     <script type=module>
       const { elements } = document.getElementById('form');
+      const sizeElement = elements.size;
 
-      elements.size.addEventListener('input', () => {
+      function crunchNumbers ()
+      {
         let values = {}
 
-        if (!elements.size.validity.valid)
+        if (!sizeElement.validity.valid)
         {
           values = {
             lands: '',
@@ -239,7 +241,7 @@
         }
         else
         {
-          const size = event.currentTarget.valueAsNumber;
+          const size = sizeElement.valueAsNumber;
 
           values.lands = Math.round(size * 0.40);
           values.nonLands = size - values.lands;
@@ -254,7 +256,11 @@
         {
           elements[name].value = values[name];
         }
-      });
+      }
+
+      sizeElement.addEventListener('input', crunchNumbers);
+
+      crunchNumbers();
     </script>
   </body>
 </html>
