@@ -33,6 +33,10 @@
   box-sizing: inherit;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 .view-title
 {
   display: inline-block;
