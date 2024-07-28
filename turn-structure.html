@@ -15,30 +15,89 @@
         text-align: center;
       }
 
+      @media print
+      {
+        nav,
+        h1,
+        .size-note
+        {
+          display: none;
+        }
+      }
+
       .cards {
         text-align: center;
       }
 
       .card
       {
+        --padding: 1em;
         --hanging-size: 2.5ch;
         --border-width: 1px;
+        --width: 6.3cm;
+        /* cards are 6.3×8.8cm with 3mm border radius */
+        --ratio: calc(6.3 / 8.8);
+        --height: calc(var(--width) / var(--ratio));
 
         container-name: card;
         container-type: inline-size;
+        position: relative;
         border: CanvasText dotted var(--border-width);
         display: inline-flex;
         flex-direction: column;
         justify-content: center;
-        width: 30em;
+        width: var(--width);
         max-width: 100%;
-        padding: 1em;
+        padding: var(--padding);
         text-align: start;
         font-family: sans-serif;
-
-        /* cards are 6.3×8.8cm with 3mm border radius */
-        aspect-ratio: 6.3 / 8.8;
+        aspect-ratio: var(--ratio);
         border-radius: calc(20rem / 6.3 * 0.3);
+
+        /* zoom will probably be deprecated at some point, but for now
+           it’s easier to use than transform:scale with some additional
+           margins */
+        zoom: 2;
+
+        @media screen
+        {
+          &:not([id])
+          {
+            display: none;
+          }
+        }
+
+        @media print
+        {
+          zoom: 1;
+          max-width: none;
+        }
+      }
+
+      /* FIXME You can add second * in the line below to see card outline, but it seems broken */
+      /*/
+      .card
+      {
+        &::after
+        {
+          content: '';
+          position: absolute;
+          inset-inline: calc(-1 * var(--border-width));
+          inset-block-start: calc(-1 * var(--border-width));
+          width: var(--width);
+          height: var(--height);
+          outline: red solid thin;
+        }
+
+        &:nth-child(3n + 1)::after { outline-color: green; }
+        &:nth-child(3n + 2)::after { outline-color: blue; }
+      }
+      /**/
+
+      .card__contents
+      {
+        flex-basis: 100%;
+        display: grid;
       }
 
       @container card (width > 0em)
@@ -84,15 +143,45 @@
         text-align: center;
       }
 
+      p
+      {
+        margin: 0;
+      }
+
       ul,
       ol
       {
         margin: 0;
         padding: 0;
+
+        > li > q:first-child::before
+        {
+          --quote-width: 0.6ch;
+
+          position: relative;
+          inset-inline-start: calc(-1 * var(--quote-width));
+          display: inline-block;
+          width: 0;
+        }
+
+        &:not(:has(br, p))
+        {
+          > li
+          {
+            margin: 0;
+          }
+        }
+
+        > li p
+        {
+          font-style: italic;
+        }
       }
 
       footer
       {
+        align-self: flex-end;
+        width: 100%;
         margin-block-start: 0.5lh;
         border-block-start: CanvasText solid thin;
         padding-block-start: 0.5lh;
@@ -103,29 +192,6 @@
       {
         /* Small margin to fit 9 cards on a A4 page */
         margin: 0.25em;
-      }
-
-      @media screen
-      {
-        .card--clone
-        {
-          display: none;
-        }
-      }
-
-      @media print
-      {
-        nav,
-        h1,
-        .size-note
-        {
-          display: none;
-        }
-
-        .card
-        {
-          width: 6.3cm;
-        }
       }
     </style>
   </head>
@@ -156,15 +222,17 @@
             <ol>
               <li>Untap your cards.</li>
               <!-- TODO Hanging punctuation? -->
-              <li><q>Unkeep step</q> happens.</li>
+              <li><q>Upkeep step</q> effects trigger.</li>
               <li>Draw a card.</li>
             </ol>
           </section>
 
           <section>
-            <h2 style="--symbol: '◼ '">Main phase</h2>
+            <h2 style="--symbol: '◼ '">First main phase</h2>
             <ul>
-              <li>One land per whole turn.</li>
+              <li>
+                Play a land — one per whole turn.
+              </li>
               <li>
                 Cast spells (all cards other than lands):
                 <br>
@@ -174,30 +242,36 @@
           </section>
 
           <section>
-            <!-- TODO Unicode text selectionv ariant -->
+            <!-- TODO Unicode text selection variant -->
             <h2 style="--symbol: '⚔\FE0E '">Combat</h2>
             <ol>
               <li>
-                Declare creatures you want to attack with.
-                <br>
-                <em>Summoned this turn or tapped can't attack.</em>
+                Declare which creatures attack which players.
+                <p>
+                  Summoned this turn or tapped can't attack.
+                </>
               </li>
               <li>
                 Opponent declares if and how they block.
-                <br>
-                <em>Tapped can’t block. One attacker can have multiple blockers.</em>
+                <p>
+                  Tapped can’t block.
+                  One attacking creature can be blocked by multiple
+                  defending creatures.
+                </p>
               </li>
-              <li>Combat damage is dealt.</li>
-              <li>Unblocked creatures deal damage to the player.</li>
+              <li>
+                Combat damage is dealt.
+                <p>Unblocked creatures deal damage to the player.</p>
+              </li>
               <li>Dead creatures go to the graveyard.</li>
             </ol>
           </section>
 
           <section>
-            <h2 style="--symbol: '◼ '">Main phase (again)</h2>
-            <ul>
-              <li>Play land only if you haven't already this turn.</li>
-            </ul>
+            <h2 style="--symbol: '◼ '">Second main phase</h2>
+            <p>
+              <em>Same as first main phase.</em>
+            </p>
           </section>
 
           <section>
@@ -227,10 +301,18 @@
       /* Create clones of the card visible only when printing */
       const PRINT_CARD_COUNT = 9;
       const card = document.getElementById('card');
+
+      // Remove siblings before creating new ones.
+      // Here only to make hot reloading behave.
+      Array.from(card.parentNode.children)
+        .filter(child => child !== card)
+        .forEach(child => child.remove());
+
       for (let i = 2; i <= PRINT_CARD_COUNT; i+= 1)
       {
         const clone = card.cloneNode(true);
-        clone.classList.add('card--clone');
+        clone.removeAttribute('id');
+        // clone.classList.add('card--clone');
         card.parentElement.insertBefore(
           clone,
           card
