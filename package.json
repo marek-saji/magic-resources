@@ -1,0 +1,11 @@
+{
+  "name": "magic-resources",
+  "description": "Magic: The Gathering resources",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Marek ‘saji’ Augustynowicz <marek.aug@gmail.com>",
+  "license": "CC-BY-SA-4.0",
+  "scripts": {
+    "dev": "npx --yes @11ty/eleventy-dev-server"
+  }
+}
